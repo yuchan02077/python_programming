@@ -1,6 +1,8 @@
 {
     "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.defaultFormatter": "ms-python.python",
         "editor.formatOnSave": true
-    }
+    },
+    "code-runner.saveAllFilesBeforeRun": true,
+    "code-runner.runInTerminal": true
 }
