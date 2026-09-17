@@ -8,8 +8,11 @@ d = {"name": "뽀로로", "age": 5}
 
 d2 = {"age": 23, "city": "일산"}
 
+d.update(d2)            #upsert
+print(d)
 
-
+print(d.pop('city'))
+print(d)
 # ===========================================================
 #  그 외
 # ===========================================================
@@ -17,15 +20,24 @@ d2 = {"age": 23, "city": "일산"}
 d = {"kor": 90, "mat": 85, "eng": 80, "prog": 100}
 
 # 딕셔너리 언패킹
+print(*d)
+print(*d.values())
 
+a, *b, c = d
+print(a, b, c)
 
+print({**d})
 
+d2 = {"eng" : 90, "sci": 95}
+print({**d, **d2})
 # 위 딕셔너리를 key 리스트와 value 리스트로 만들기
-
+subjects = list(d)
+scores = list(d.values())
+print(subjects, scores)
 
 # 리스트를 다시 딕셔너리로 만들기
 # zip 함수로 튜플을 먼저 만들고, dict()에서 튜플의 [0]값을 key로, [1]값을 value로 넣음
-
+print(dict(zip(subjects, scores)))
 
 
 # ===========================================================
@@ -34,19 +46,24 @@ d = {"kor": 90, "mat": 85, "eng": 80, "prog": 100}
 
 # 1 ~ 10의 제곱수 딕셔너리 만들기
 # {1: 1, 2: 4, 3: 9, 4: 16, 5: 25 .. }
-
+result = {x : x**2 for x in range(1, 11)}
+print(result)
 
 # 1 ~ 10 중 홀수 제곱수로 된 딕셔너리 만들기
 # {1: 1, 3: 9, 5: 25, 7: 49, 9: 81}
-
+result = {x : x**2 for x in range(1, 11, 2)}
+print(result)
 
 # 위 result 딕셔너리의 키를 값으로, 값을 키로 바꾸기
 # {1: 1, 9: 3, 25: 5, 49: 7, 81: 9}
-
+result = {v: k for k,v in result.items()}
+print(result)
 
 # 점수 90 이상만 필터링하기
 
-
+scores = {"국어": 90, "영어": 85, "수학": 95, "과학": 89}
+result = {x : x for x, k in scores.items() if k >= 90}
+print(result)
 
 # =========================================================
 #  🔥 실습 문제
@@ -54,24 +71,24 @@ d = {"kor": 90, "mat": 85, "eng": 80, "prog": 100}
 
 # 1️⃣ 바구니에 있는 과일의 단어 개수 세기
 words = ["apple", "banana", "apple", "cherry", "banana", "apple"]
-
-
+result = {x : words.count(x) for x in words}
+print(result)
 
                                     # ✅ {'apple': 3, 'banana': 2, 'cherry': 1}
 
 
 # 2️⃣ 60점 이상인 경우 합격 설정하기
 scores = {"국어": 85, "영어": 50, "수학": 95, "과학": 40, "사회": 72}
-
-
+result = {x: '합격' for x, k in scores.items() if k >= 60}
+print(result)
                                     # ✅ {'국어': '합격', '수학': '합격', '사회': '합격'}
 
 
 # 3️⃣ 과목 리스트와 점수 리스트로 딕셔너리 만들기
 subjects = ["국어", "영어", "수학"]
 grades = [90, 80, 100]
-
-
+result = dict(zip(subjects, grades))
+print(result)
                                     # ✅ {'국어': 90, '영어': 80, '수학': 100}
 
 
@@ -79,5 +96,7 @@ grades = [90, 80, 100]
 stock = {"연필": 10, "지우개": 5, "노트": 3}        # 기존 재고
 incoming = {"지우개": 4, "노트": 7, "볼펜": 12}     # 입고 내역
 
-
-                                    # ✅ {'연필': 10, '지우개': 9, '노트': 10, '볼펜': 12}
+for item, qty in incoming.items():
+    stock[item] = stock.get(item, 0) + qty
+    
+print(stock)                                   # ✅ {'연필': 10, '지우개': 9, '노트': 10, '볼펜': 12}
